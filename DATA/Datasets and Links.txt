@@ -1,0 +1,15 @@
+Faces 
+
+https://www.kaggle.com/vasukipatel/face-recognition-dataset?select=Dataset.csv
+
+fingerprint
+
+https://www.kaggle.com/ruizgara/socofing
+
+Random Numbers
+
+https://www.educba.com/random-number-generator-in-python/?msclkid=60e9a687bb3311ecb4b3bbecea0ff7d6
+
+Pneumonia
+
+https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia
