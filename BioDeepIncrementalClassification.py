@@ -1,13 +1,13 @@
-# %%
+
+
 
 from torch import nn
 
 import pandas as pd
-from avalanche.benchmarks import benchmark_with_validation_stream, nc_benchmark
+from avalanche.benchmarks import benchmark_with_validation_stream, nc_benchmark, dataset_benchmark, CLExperience
+from torch.nn import CrossEntropyLoss
 from torch.utils.data import Dataset
 import torch
-from torch.nn import CrossEntropyLoss
-
 from avalanche.training.supervised import EWC, icarl, Naive, CWRStar, Replay, GDumb, LwF, GEM, AGEM, EWC
 from avalanche.evaluation.metrics import forgetting_metrics, accuracy_metrics, loss_metrics, timing_metrics, \
     cpu_usage_metrics, disk_usage_metrics
@@ -16,28 +16,13 @@ from avalanche.logging import InteractiveLogger, TensorboardLogger, TextLogger
 from avalanche.training.plugins import EvaluationPlugin
 from avalanche.training import ExemplarsBuffer, ReservoirSamplingBuffer
 
+from avalanche.benchmarks import CLExperience
+from avalanche.models import DynamicModule
 
-# %%
-
-class TorchDataset(Dataset):
-
-    def __init__(self, filePath):
-
-        # Read CSV
-        data = pd.read_csv(filePath)
-        # drop one class from dataset to make it 30 classes
-        data = data[data['label'] != 30]
-
-
-        self.X = data.iloc[:, :-1].values
-        self.targets = data.iloc[:, -1].values
-
-
-        # Feature Scale if you want
-
-        # Convert to Torch Tensors
-        self.X = torch.tensor(self.X, dtype=torch.float32)
-        self.targets = torch.tensor(self.targets, dtype=torch.int)
+class TorchDataset2(Dataset):
+    def __init__(self, X, y):
+        self.X = torch.tensor(X, dtype=torch.float32)
+        self.targets = torch.tensor(y, dtype=torch.long)
 
     def __len__(self):
         return len(self.targets)
@@ -46,26 +31,42 @@ class TorchDataset(Dataset):
         return self.X[item], self.targets[item]
 
 
+def prepare_single_dataset(data, label):
+    X = data[data['label'] == label].iloc[:, :-1].values
+    targets = data[data['label'] == label].iloc[:, -1].values
+    return TorchDataset2(X, targets)
+
+
 def prep_benchmark(train_loc, test_loc):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(device)
 
-    hdata_train = TorchDataset(train_loc)
-    hdata_test = TorchDataset(test_loc)
+    data_train = pd.read_csv(train_loc)
+    data_train['label'] = data_train['label'].astype('int64')
+    data_test = pd.read_csv(test_loc)
+    data_test['label'] = data_test['label'].astype('int64')
 
-    return benchmark_with_validation_stream(nc_benchmark(train_dataset=hdata_train, test_dataset=hdata_test
-                                                         , shuffle=True, seed=1234, task_labels=True, n_experiences=5,
-                                                         one_dataset_per_exp=True,
+    train_datasets = []
+    test_datasets = []
 
-                                                         ))
-from avalanche.benchmarks import CLExperience
-from avalanche.models import DynamicModule
+    #print the size of both train and test data
+    print("Train data size: ", data_train.shape)
+    print("Test data size: ", data_test.shape)
+
+    for label in range(30):
+        train_datasets.append(prepare_single_dataset(data_train, label))
+        test_datasets.append(prepare_single_dataset(data_test, label))
+
+    # return all the datasets within a set
+    return train_datasets, test_datasets,dataset_benchmark(train_datasets=train_datasets, test_datasets=test_datasets)
 
 
 
+    # return dataset_benchmark(train_datasets=train_datasets, test_datasets=test_datasets)
 
 
-# implement a Incremental classifier with a custom classifier
+######
+
 class IncrementalClassifierD1(DynamicModule):
     """
     Output layer that incrementally adds units whenever new classes are
@@ -92,20 +93,6 @@ class IncrementalClassifierD1(DynamicModule):
         super().__init__()
         self.masking = masking
         self.mask_value = mask_value
-        # self.features = nn.Sequential(
-        # nn.Conv1d(in_channels=1, out_channels=32, padding='same',  kernel_size=3,),
-        # nn.MaxPool1d(4),
-        # nn.Conv1d(in_channels=32, out_channels=32, padding='same',  kernel_size=3),
-        # nn.MaxPool1d(4),
-        # nn.Conv1d(in_channels=32, out_channels=16, padding='same',  kernel_size=3),
-        # nn.MaxPool1d(4),
-        # nn.Conv1d(in_channels=16, out_channels=16, padding='same',  kernel_size=3),
-        # nn.MaxPool1d(4),
-        # )
-        #
-        # self.fc1 = nn.Linear(256, 300)
-        # self.fc2 = nn.Linear(300, 128)
-        # self.fc3 = nn.Linear(128, 31)
         self.conv1D_1 = nn.Conv1d(in_channels=1, out_channels=32, padding='same', kernel_size=3, )
         self.maxPool1D_1 = nn.MaxPool1d(4)
         self.conv1D_2 = nn.Conv1d(in_channels=32, out_channels=32, padding='same', kernel_size=3)
@@ -115,9 +102,14 @@ class IncrementalClassifierD1(DynamicModule):
         self.conv1D_4 = nn.Conv1d(in_channels=16, out_channels=16, padding='same', kernel_size=3)
         self.maxPool1D_4 = nn.MaxPool1d(4)
 
-        self.fc1 = nn.Linear(256, 300)
-        self.fc2 = nn.Linear(300, 128)
-        self.fc3 = nn.Linear(128, 31)
+        self.classifier = nn.Sequential(nn.Linear(256, 300),nn.ReLU(),
+                                        nn.Linear(300, 128),nn.ReLU(),
+                                        nn.Linear(128, initial_out_features)
+                                        )
+        # self.fc1 = nn.Linear(256, 300)
+        # self.fc2 = nn.Linear(300, 128)
+        # self.fc3 = nn.Linear(128, initial_out_features) #TODO: Check this was 31
+
         self.classifier = nn.Linear(256, initial_out_features)
         # self.initial_out_features = initial_out_features
 
@@ -188,46 +180,25 @@ class IncrementalClassifierD1(DynamicModule):
 
         x = x.reshape(x.shape[0], -1)
 
-        x = self.fc1(x)
-        x = torch.relu(x)
-        x = self.fc2(x)
-        x = torch.relu(x)
-        x = self.fc3(x)
+        # x = self.fc1(x)
+        # x = torch.relu(x)
+        # x = self.fc2(x)
+        # x = torch.relu(x)
+        # x = self.fc3(x)
+        x = self.classifier(x)
         out = torch.log_softmax(x, dim=1)
 
-        # if self.masking:
-        #     mask = torch.logical_not(self.active_units)
-        #     out[torch.unsqueeze(mask, dim=-1)] = self.mask_value
-        # return out
         return out
 
 
-# %%
-features = nn.Sequential(
-    nn.Conv1d(in_channels=1, out_channels=32, padding='same', kernel_size=3, ),
-    nn.MaxPool1d(4),
-    nn.Conv1d(in_channels=32, out_channels=32, padding='same', kernel_size=3),
-    nn.MaxPool1d(4),
-    nn.Conv1d(in_channels=32, out_channels=16, padding='same', kernel_size=3),
-    nn.MaxPool1d(4),
-    nn.Conv1d(in_channels=16, out_channels=16, padding='same', kernel_size=3),
-    nn.MaxPool1d(4),
-)
-sample_input = torch.randn(1, 1, 4096)
+#####
 
-sample_output = features(sample_input)
-print(sample_output.shape)
-smaple_output = sample_output.view(sample_output.size(0), -1)
-
-print(sample_output.shape)
-
-# %%
-from avalanche.models import IncrementalClassifier
 
 model4 = IncrementalClassifierD1(in_features=4096, masking=True)
 # %%
 
-benchmark = prep_benchmark(train_loc='./DATA/TRAIN_DATA.csv', test_loc='./DATA/TEST_DATA.csv')
+train_datasets, test_datasets,benchmark = prep_benchmark(train_loc='./DATA/TRAIN_DATA.csv', test_loc='./DATA/TEST_DATA.csv')
+
 
 # log to Tensorboard
 tb_logger = TensorboardLogger()
@@ -278,3 +249,6 @@ for experience in benchmark.train_stream:
     print('Computing accuracy on the whole test set')
     # test also returns a dictionary which contains all the metric values
     results.append(cl_strategy.eval(benchmark.test_stream))
+
+
+
