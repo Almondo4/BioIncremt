@@ -102,16 +102,16 @@ class IncrementalClassifierD1(DynamicModule):
         self.conv1D_4 = nn.Conv1d(in_channels=16, out_channels=16, padding='same', kernel_size=3)
         self.maxPool1D_4 = nn.MaxPool1d(4)
 
-        self.classifier = nn.Sequential(nn.Linear(256, 300), nn.ReLU(),
-                                        nn.Linear(300, 128), nn.ReLU(),
-                                        nn.Linear(128, initial_out_features)
-                                        )
+        # self.classifier = nn.Sequential(nn.Linear(256, 300), nn.ReLU(),
+        #                                 nn.Linear(300, 128), nn.ReLU(),
+        #                                 nn.Linear(128, initial_out_features)
+        #                                 )
         # self.fc1 = nn.Linear(256, 300)
         # self.fc2 = nn.Linear(300, 128)
         # self.fc3 = nn.Linear(128, initial_out_features) #TODO: Check this was 31
+        self.initial_out_features = initial_out_features
+        self.classifier = nn.Linear(128, initial_out_features)
 
-        self.classifier = nn.Linear(256, initial_out_features)
-        # self.initial_out_features = initial_out_features
 
         # self.classifier = torch.nn.Linear(in_features, initial_out_features)
         au_init = torch.zeros(initial_out_features, dtype=torch.bool)
@@ -180,15 +180,19 @@ class IncrementalClassifierD1(DynamicModule):
 
         x = x.reshape(x.shape[0], -1)
 
-        # x = self.fc1(x)
-        # x = torch.relu(x)
-        # x = self.fc2(x)
-        # x = torch.relu(x)
-        # x = self.fc3(x)
+        x = self.fc1(x)
+        x = torch.relu(x)
+        x = self.fc2(x)
+        x = torch.relu(x)
+        x = self.fc3(x)
         x = self.classifier(x)
         out = torch.log_softmax(x, dim=1)
 
+        if self.masking:
+            out[..., torch.logical_not(self.active_units)] = self.mask_value
         return out
+
+
 
 
 #####
