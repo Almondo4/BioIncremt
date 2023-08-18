@@ -102,8 +102,8 @@ class IncrementalClassifierD1(DynamicModule):
         self.conv1D_4 = nn.Conv1d(in_channels=16, out_channels=16, padding='same', kernel_size=3)
         self.maxPool1D_4 = nn.MaxPool1d(4)
 
-        self.classifier = nn.Sequential(nn.Linear(256, 300),nn.ReLU(),
-                                        nn.Linear(300, 128),nn.ReLU(),
+        self.classifier = nn.Sequential(nn.Linear(256, 300), nn.ReLU(),
+                                        nn.Linear(300, 128), nn.ReLU(),
                                         nn.Linear(128, initial_out_features)
                                         )
         # self.fc1 = nn.Linear(256, 300)
