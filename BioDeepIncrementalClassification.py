@@ -1,6 +1,4 @@
 
-
-
 from torch import nn
 
 import pandas as pd
@@ -53,7 +51,32 @@ def prep_benchmark(train_loc, test_loc):
     print("Train data size: ", data_train.shape)
     print("Test data size: ", data_test.shape)
 
-    for label in range(30):
+
+    # Prepare the first dataset with labels 0 and 1
+
+    d1 = prepare_single_dataset(data_train, 0)
+    d2 = prepare_single_dataset(data_train, 1)
+
+    dt1 = prepare_single_dataset(data_test, 0)
+    dt2 = prepare_single_dataset(data_test, 1)
+
+    # Concatenate the tensors in the datasets
+    combined_X = torch.cat([d1.X, d2.X])
+    combined_targets = torch.cat([d1.targets, d2.targets])
+    combined_Xt = torch.cat([dt1.X, dt2.X])
+    combined_t_targets = torch.cat([dt1.targets, dt2.targets])
+
+
+    # Create a new dataset instance with the concatenated tensors
+    d1_2 = TorchDataset2(combined_X, combined_targets)
+    dt1_2 = TorchDataset2(combined_Xt, combined_t_targets)
+
+    train_datasets.append(d1_2)
+    test_datasets.append(dt1_2)
+
+
+    # Prepare the remaining datasets with labels 2 to 29
+    for label in range(2, 30):
         train_datasets.append(prepare_single_dataset(data_train, label))
         test_datasets.append(prepare_single_dataset(data_test, label))
 
@@ -102,14 +125,13 @@ class IncrementalClassifierD1(DynamicModule):
         self.conv1D_4 = nn.Conv1d(in_channels=16, out_channels=16, padding='same', kernel_size=3)
         self.maxPool1D_4 = nn.MaxPool1d(4)
 
-        # self.classifier = nn.Sequential(nn.Linear(256, 300), nn.ReLU(),
-        #                                 nn.Linear(300, 128), nn.ReLU(),
-        #                                 nn.Linear(128, initial_out_features)
-        #                                 )
-        # self.fc1 = nn.Linear(256, 300)
-        # self.fc2 = nn.Linear(300, 128)
-        # self.fc3 = nn.Linear(128, initial_out_features) #TODO: Check this was 31
         self.initial_out_features = initial_out_features
+
+
+        self.fc1 = nn.Linear(256, 300)
+        self.fc2 = nn.Linear(300, 128)
+
+
         self.classifier = nn.Linear(128, initial_out_features)
 
 
@@ -117,13 +139,37 @@ class IncrementalClassifierD1(DynamicModule):
         au_init = torch.zeros(initial_out_features, dtype=torch.bool)
         self.register_buffer("active_units", au_init)
 
+    # @torch.no_grad()
+    # def adaptation(self, experience: CLExperience):
+    #     """If `dataset` contains unseen classes the classifier is expanded.
+    #
+    #     :param experience: data from the current experience.
+    #     :return:
+    #     """
+    #     in_features = self.classifier.in_features
+    #     old_nclasses = self.classifier.out_features
+    #     curr_classes = experience.classes_in_this_experience
+    #     new_nclasses = max(self.classifier.out_features, max(curr_classes) + 1)
+    #
+    #     # update active_units mask
+    #     if self.masking:
+    #         if old_nclasses != new_nclasses:  # expand active_units mask
+    #             old_act_units = self.active_units
+    #             self.active_units = torch.zeros(new_nclasses, dtype=torch.bool)
+    #             self.active_units[: old_act_units.shape[0]] = old_act_units
+    #         # update with new active classes
+    #         if self.training:
+    #             self.active_units[curr_classes] = 1
+    #
+    #     # update classifier weights
+    #     if old_nclasses == new_nclasses:
+    #         return
+    #     old_w, old_b = self.classifier.weight, self.classifier.bias
+    #     self.classifier = torch.nn.Linear(in_features, new_nclasses)
+    #     self.classifier.weight[:old_nclasses] = old_w
+    #     self.classifier.bias[:old_nclasses] = old_b
     @torch.no_grad()
     def adaptation(self, experience: CLExperience):
-        """If `dataset` contains unseen classes the classifier is expanded.
-
-        :param experience: data from the current experience.
-        :return:
-        """
         in_features = self.classifier.in_features
         old_nclasses = self.classifier.out_features
         curr_classes = experience.classes_in_this_experience
@@ -132,7 +178,7 @@ class IncrementalClassifierD1(DynamicModule):
         # update active_units mask
         if self.masking:
             if old_nclasses != new_nclasses:  # expand active_units mask
-                old_act_units = self.active_units
+                old_act_units = self.active_units.clone()
                 self.active_units = torch.zeros(new_nclasses, dtype=torch.bool)
                 self.active_units[: old_act_units.shape[0]] = old_act_units
             # update with new active classes
@@ -140,12 +186,11 @@ class IncrementalClassifierD1(DynamicModule):
                 self.active_units[curr_classes] = 1
 
         # update classifier weights
-        if old_nclasses == new_nclasses:
-            return
-        old_w, old_b = self.classifier.weight, self.classifier.bias
-        self.classifier = torch.nn.Linear(in_features, new_nclasses)
-        self.classifier.weight[:old_nclasses] = old_w
-        self.classifier.bias[:old_nclasses] = old_b
+        if old_nclasses != new_nclasses:
+            old_w, old_b = self.classifier.weight, self.classifier.bias
+            self.classifier = torch.nn.Linear(in_features, new_nclasses)
+            self.classifier.weight[:old_nclasses] = old_w
+            self.classifier.bias[:old_nclasses] = old_b
 
     def forward(self, x, **kwargs):
         """compute the output given the input `x`. This module does not use
@@ -184,18 +229,16 @@ class IncrementalClassifierD1(DynamicModule):
         x = torch.relu(x)
         x = self.fc2(x)
         x = torch.relu(x)
-        x = self.fc3(x)
+        # x = self.fc3(x)
         x = self.classifier(x)
         out = torch.log_softmax(x, dim=1)
 
         if self.masking:
-            out[..., torch.logical_not(self.active_units)] = self.mask_value
-        return out
-
-
-
-
-#####
+            masked_out = out.clone()  # Make a copy of the output tensor
+            masked_out[..., torch.logical_not(self.active_units)] = self.mask_value
+            return masked_out
+        else:
+            return out
 
 
 model4 = IncrementalClassifierD1(in_features=4096, masking=True)
@@ -229,10 +272,10 @@ cl_strategy = EWC(
     model=model4,
     optimizer=torch.optim.Adam(model4.parameters(), lr=1e-3),
     criterion=CrossEntropyLoss(),
-    train_mb_size=500, train_epochs=20, eval_mb_size=100,
+    train_mb_size=500, train_epochs=10, eval_mb_size=100,
     ewc_lambda=0.4,
     evaluator=eval_plugin,
-    plugins=[ReplayPlugin(mem_size=10000, storage_policy=ReservoirSamplingBuffer(max_size=10000)),
+    plugins=[ReplayPlugin(mem_size=1000, storage_policy=ReservoirSamplingBuffer(max_size=1000)),
              ]
 )
 
@@ -241,10 +284,13 @@ print('Starting experiment...')
 results = []
 model_incs = []
 classes_exp = []
+import yaml
+
+all_results = {}
 for experience in benchmark.train_stream:
     print("Start of experience: ", experience.current_experience)
     print("Current Classes: ", experience.classes_in_this_experience)
-    # model_incs.append(model4.classifier.out_features)
+
     classes_exp.append(experience.classes_in_this_experience)
     # train returns a dictionary which contains all the metric values
     res = cl_strategy.train(experience)
@@ -253,6 +299,35 @@ for experience in benchmark.train_stream:
     print('Computing accuracy on the whole test set')
     # test also returns a dictionary which contains all the metric values
     results.append(cl_strategy.eval(benchmark.test_stream))
+    model_incs.append(torch.sum(model4.active_units).item())
+    print("Model's classifier layer output shape: ", torch.sum(model4.active_units).item())
 
+performance_profiler = {}
 
+performance_profiler['Active Units'] = []
+performance_profiler['Evaluation Accuracy'] = []
+performance_profiler['Training Accuracy'] = []
+for i in range(0, benchmark.n_experiences - 1):
+    formatted_i = f"{i:03d}"
+    performance_profiler['Evaluation Accuracy'].append({'Exp_'+formatted_i:    cl_strategy.evaluator.get_last_metrics()[f'Top1_Acc_Exp/eval_phase/test_stream/Task000/Exp{formatted_i}']
+ })
+    training_accuracies= cl_strategy.evaluator.get_all_metrics()[f'Top1_Acc_Epoch/train_phase/train_stream/Task{formatted_i}'][1]
+    print(training_accuracies.count())
+    performance_profiler['Evaluation Accuracy'].append({'Exp_' + formatted_i: sum(training_accuracies)/len(training_accuracies)})
 
+    performance_profiler['Active Units'].append({'Exp_'+formatted_i:  model_incs[i]})
+print (performance_profiler)
+
+with open("evaluation_results.yaml", "w") as yaml_file:
+    yaml.dump(performance_profiler, yaml_file)
+
+    # Write a todo block list
+    # 1. Make the first experience include 2 classes
+    # 2. Save training results from all metrics at each stage and save it for comparison
+        # 2.1. What can be achived is to sample 10 samples from each previous datasets every 5 expereinces to a total of 6 tests
+        # 2.2. The results can be saved in a nested dictionary with the following structure
+            # expereince 5/10/15/20/25/30
+                # Accuracies (0 or exprience -1) -> expereince: Accuracy
+                # Average
+    # 3. BWT  = Accuracy at experience 5/10/15/20/25/30 can be calculated from a nother cumulative dataset and the bwt transfer would would be representing the cumulative approach
+    # 4. Try a different implementation of the model

@@ -46,14 +46,14 @@ class TorchDataset(Dataset):
         return self.X[item], self.targets[item]
 
 
-def prep_benchmark(train_loc, test_loc):
+def prep_benchmark(train_loc, ):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(device)
 
     hdata_train = TorchDataset(train_loc)
-    hdata_test = TorchDataset(test_loc)
+    # hdata_test = TorchDataset(test_loc)
 
-    return benchmark_with_validation_stream(nc_benchmark(train_dataset=hdata_train, test_dataset=hdata_test
+    return benchmark_with_validation_stream(nc_benchmark(train_dataset=hdata_train, test_dataset=hdata_train
                                                          , shuffle=True, seed=1234, task_labels=True, n_experiences=5,
                                                          one_dataset_per_exp=True,
 
@@ -227,7 +227,7 @@ from avalanche.models import IncrementalClassifier
 model4 = IncrementalClassifierD1(in_features=4096, masking=True)
 # %%
 
-benchmark = prep_benchmark(train_loc='./DATA/TRAIN_DATA.csv', test_loc='./DATA/TEST_DATA.csv')
+benchmark = prep_benchmark(train_loc='./DATA/TRAIN_DATA.csv',)
 
 # log to Tensorboard
 tb_logger = TensorboardLogger()
@@ -250,12 +250,14 @@ eval_plugin = EvaluationPlugin(
     loggers=[interactive_logger, text_logger, tb_logger]
 )
 # %%
-cl_strategy = EWC(
+cl_strategy = LwF(
     model=model4,
     optimizer=torch.optim.Adam(model4.parameters(), lr=1e-3),
     criterion=CrossEntropyLoss(),
     train_mb_size=500, train_epochs=20, eval_mb_size=100,
-    ewc_lambda=0.4,
+    # ewc_lambda=0.4,
+    alpha=0.5,
+    temperature=2,
     evaluator=eval_plugin,
     plugins=[ReplayPlugin(mem_size=10000, storage_policy=ReservoirSamplingBuffer(max_size=10000)),
              ]
