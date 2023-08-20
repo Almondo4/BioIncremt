@@ -152,3 +152,5 @@ for i, cumul_dataset in enumerate(cumulative_benchmark):
         print(f"Classes in cumulative dataset {i+1}: {unique_classes.tolist()}")
 
 ######
+
+# Test model too and see how you can seperrat it?
