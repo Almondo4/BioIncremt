@@ -1,0 +1,39 @@
+Average Accuracy: 0.9838709831237793
+Comprehensive accuracy:
+- 1.0
+- 1.0
+- 1.0
+- 0.9
+- 1.0
+- 1.0
+- 0.9
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 0.9
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 0.9
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 1.0
+- 0.9
+Cumulative Test Results:
+  Cumulative Set 0: 0.9833333492279053
+  Cumulative Set 1: 0.9818181991577148
+  Cumulative Set 2: 0.987500011920929
+  Cumulative Set 3: 0.9857142567634583
+  Cumulative Set 4: 0.9846153855323792
+  Cumulative Set 5: 0.9838709831237793

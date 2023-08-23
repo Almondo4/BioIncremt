@@ -8,7 +8,7 @@ from torch.nn import CrossEntropyLoss
 from torchmetrics import Accuracy
 
 from Incremental1DCNN import Incremental1DCNNClassifier
-import DataPrep
+import IncrementalDataPrep
 import torch
 
 

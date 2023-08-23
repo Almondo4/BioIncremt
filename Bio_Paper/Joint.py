@@ -8,7 +8,7 @@ from torch.nn import CrossEntropyLoss
 from torchmetrics import Accuracy
 
 from Incremental1DCNN import Incremental1DCNNClassifier
-import DataPrep
+import IncrementalDataPrep
 import torch
 
 
@@ -42,7 +42,7 @@ cl_strategy = JointTraining(
     model=model,
     optimizer=torch.optim.Adam(model.parameters(), lr=1e-3),
     criterion=CrossEntropyLoss(),
-    train_mb_size=500, train_epochs=200, eval_mb_size=100,
+    train_mb_size=500, train_epochs=600, eval_mb_size=100,
     evaluator=eval_plugin,
 
 )
@@ -67,7 +67,7 @@ testing_accuracy = []
 for i in range(30):
     testing_accuracy.append(eval_res[f'Top1_Acc_Exp/eval_phase/test_stream/Task000/Exp{i:03d}'])
 print('Testing accuracy for each class: ', testing_accuracy)
-#testing on total set
+#testing for total set
 with torch.no_grad():
     y_pred_logits = cl_strategy.model(torch.tensor(cumulative_benchmark[-1].X, dtype=torch.float32))
     y_pred_labels = torch.argmax(y_pred_logits, dim=1)
@@ -98,9 +98,48 @@ for set in cumulative_benchmark:
     cumulative_test_results['Cumulative Set ' + str(cumulative_benchmark.index(set))] = acc.item()
 
 # Save the results in a dictionary and save it in a yaml file
-all_results = {'Average Accuracy': acc,
+all_results = {'Average Accuracy': float(acc),
                'Comprehensive accuracy': testing_accuracy,
                'Cumulative Test Results': cumulative_test_results,
                }
-with open('Joint_200_results.yaml', 'w') as file:
+with open('Joint_600_results.yaml', 'w') as file:
     yaml.dump(all_results, file)
+
+import pandas as pd
+with open('Joint_600_results.yaml', 'r') as yaml_file:
+    yaml_data = yaml.safe_load(yaml_file)
+# Create a Pandas DataFrame
+data = {
+    'Metric': ['Average Accuracy'],
+    'Value': [yaml_data['Average Accuracy']]
+}
+average_df = pd.DataFrame(data)
+
+comprehensive_data = {
+    'Accuracy': yaml_data['Comprehensive accuracy']
+}
+# Create a Pandas DataFrame for comprehensive accuracy
+comprehensive_df = pd.DataFrame({
+    'Experience': [f'Exp{I:03d}' for I in range(30)],  # New column
+    'Accuracy': yaml_data['Comprehensive accuracy']
+})
+
+
+cumulative_data = {
+    'Cumulative Set': list(yaml_data['Cumulative Test Results'].keys()),
+    'Accuracy': list(yaml_data['Cumulative Test Results'].values())
+}
+cumulative_df = pd.DataFrame(cumulative_data)
+
+# Create an Excel writer
+excel_writer = pd.ExcelWriter('Joint_600.xlsx', engine='xlsxwriter')
+
+# Write DataFrames to Excel sheets
+average_df.to_excel(excel_writer, sheet_name='Average Accuracy', index=False)
+comprehensive_df.to_excel(excel_writer, sheet_name='Comprehensive Accuracy', index=False)
+cumulative_df.to_excel(excel_writer, sheet_name='Cumulative Test Results', index=False)
+
+# Save the Excel file
+excel_writer.save()
+
+print("Excel file created successfully.")
