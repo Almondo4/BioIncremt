@@ -62,8 +62,8 @@ def prep_incremental_benchmark(train_loc, test_loc):
     train_datasets.append(d1_2)
     test_datasets.append(dt1_2)
 
-    # Prepare the remaining datasets with labels 2 to 29
-    for label in range(2, 30):
+    # Prepare the remaining datasets with labels 2 to 30
+    for label in range(2, 31):
         train_datasets.append(prepare_single_dataset(data_train, label))
         test_datasets.append(prepare_single_dataset(data_test, label))
 
@@ -93,3 +93,12 @@ for i, cumul_dataset in enumerate(cumulative_benchmark):
 ######
 
 # Test model too and see how you can seperrat it?
+
+# main function to run this file
+if __name__ == '__main__':
+    train_datasets, test_datasets, benchmark, cumulative_benchmark = prep_incremental_benchmark \
+        (train_loc='../DATA/TRAIN_DATA.csv', test_loc='../DATA/TEST_DATA.csv')
+    data = pd.read_csv('../DATA/TRAIN_DATA.csv')
+    #print list of labels in data
+    print('Labels in data: ', data['label'].unique())
+    print('n Labels in data: ', len(data['label'].unique()))
