@@ -97,7 +97,7 @@ for set in cumulative_benchmark:
     # ad to dict cumulative_final_results
     cumulative_test_results['Cumulative Set ' + str(cumulative_benchmark.index(set))] = acc.item()
 
-# TODO: Save the results in a dictionary and save it in a yaml file
+# Save the results in a dictionary and save it in a yaml file
 all_results = {'Average Accuracy': acc,
                'Comprehensive accuracy': testing_accuracy,
                'Cumulative Test Results': cumulative_test_results,
