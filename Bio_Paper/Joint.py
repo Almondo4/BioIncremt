@@ -42,7 +42,7 @@ cl_strategy = JointTraining(
     model=model,
     optimizer=torch.optim.Adam(model.parameters(), lr=1e-3),
     criterion=CrossEntropyLoss(),
-    train_mb_size=500, train_epochs=600, eval_mb_size=100,
+    train_mb_size=500, train_epochs=200, eval_mb_size=100,
     evaluator=eval_plugin,
 
 )
@@ -61,13 +61,13 @@ try:
     res = cl_strategy.train(benchmark.train_stream, )
 except Exception as e:
     print(e)
-# Teting for each particular class
+# Testing for each particular class
 eval_res = cl_strategy.eval(benchmark.test_stream)
 testing_accuracy = []
 for i in range(30):
     testing_accuracy.append(eval_res[f'Top1_Acc_Exp/eval_phase/test_stream/Task000/Exp{i:03d}'])
 print('Testing accuracy for each class: ', testing_accuracy)
-#testing for total set
+#testing on total set
 with torch.no_grad():
     y_pred_logits = cl_strategy.model(torch.tensor(cumulative_benchmark[-1].X, dtype=torch.float32))
     y_pred_labels = torch.argmax(y_pred_logits, dim=1)
@@ -102,5 +102,5 @@ all_results = {'Average Accuracy': acc,
                'Comprehensive accuracy': testing_accuracy,
                'Cumulative Test Results': cumulative_test_results,
                }
-with open('Joint_600_results.yaml', 'w') as file:
+with open('Joint_200_results.yaml', 'w') as file:
     yaml.dump(all_results, file)
