@@ -1,0 +1,52 @@
+Average Accuracy: !!python/object/apply:torch._utils._rebuild_tensor_v2
+- !!python/object/apply:torch.storage._load_from_bytes
+  - !!binary |
+    gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+    AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+    aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+    Z2UKcQFYDQAAADE4MzM4ODEyODcyMTZxAlgDAAAAY3B1cQNLAU50cQRRLoACXXEAWA0AAAAxODMz
+    ODgxMjg3MjE2cQFhLgEAAAAAAAAAy18yPw==
+- 0
+- !!python/tuple []
+- !!python/tuple []
+- false
+- !!python/object/apply:collections.OrderedDict
+  - []
+Comprehensive accuracy:
+- 0.85
+- 0.7
+- 0.5
+- 0.5
+- 0.8
+- 1.0
+- 1.0
+- 1.0
+- 0.9
+- 0.8
+- 1.0
+- 0.2
+- 1.0
+- 0.9
+- 1.0
+- 0.0
+- 0.8
+- 0.1
+- 0.6
+- 0.8
+- 0.8
+- 0.2
+- 0.5
+- 0.0
+- 1.0
+- 1.0
+- 0.1
+- 1.0
+- 0.9
+- 0.8
+Cumulative Test Results:
+  Cumulative Set 0: 0.699999988079071
+  Cumulative Set 1: 0.8090909123420715
+  Cumulative Set 2: 0.8125
+  Cumulative Set 3: 0.7285714149475098
+  Cumulative Set 4: 0.6846153736114502
+  Cumulative Set 5: 0.6967741847038269
