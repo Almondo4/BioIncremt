@@ -1,0 +1,753 @@
+Comprehensive Training Results:
+  0:
+    Training Exprience(0):
+      Active units: 2
+      Exp000: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 1.0
+  1:
+    Training Exprience(1):
+      Active units: 3
+      Exp000: 0.0
+      Exp001: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.3333333333333333
+  2:
+    Training Exprience(2):
+      Active units: 4
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.25
+  3:
+    Training Exprience(3):
+      Active units: 5
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.2
+  4:
+    Training Exprience(4):
+      Active units: 6
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.16666666666666666
+  5:
+    Training Exprience(5):
+      Active units: 7
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.14285714285714285
+  6:
+    Training Exprience(6):
+      Active units: 8
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.3
+      Exp006: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.1625
+  7:
+    Training Exprience(7):
+      Active units: 9
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.1111111111111111
+  8:
+    Training Exprience(8):
+      Active units: 10
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.1
+  9:
+    Training Exprience(9):
+      Active units: 11
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.09090909090909091
+  10:
+    Training Exprience(10):
+      Active units: 12
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.08333333333333333
+  11:
+    Training Exprience(11):
+      Active units: 13
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.1
+      Exp011: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.08461538461538462
+  12:
+    Training Exprience(12):
+      Active units: 14
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.07142857142857142
+  13:
+    Training Exprience(13):
+      Active units: 15
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.06666666666666667
+  14:
+    Training Exprience(14):
+      Active units: 16
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.0625
+  15:
+    Training Exprience(15):
+      Active units: 17
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.058823529411764705
+  16:
+    Training Exprience(16):
+      Active units: 18
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.05555555555555555
+  17:
+    Training Exprience(17):
+      Active units: 19
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 1.0
+      Exp017: 0.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.05263157894736842
+  18:
+    Training Exprience(18):
+      Active units: 20
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.05
+  19:
+    Training Exprience(19):
+      Active units: 21
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.047619047619047616
+  20:
+    Training Exprience(20):
+      Active units: 22
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.045454545454545456
+  21:
+    Training Exprience(21):
+      Active units: 23
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 1.0
+      Exp021: 0.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.043478260869565216
+  22:
+    Training Exprience(22):
+      Active units: 24
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 0.0
+      Exp021: 0.0
+      Exp022: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.041666666666666664
+  23:
+    Training Exprience(23):
+      Active units: 25
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 0.0
+      Exp021: 0.0
+      Exp022: 0.0
+      Exp023: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.04
+  24:
+    Training Exprience(24):
+      Active units: 26
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 0.0
+      Exp021: 0.0
+      Exp022: 0.0
+      Exp023: 0.0
+      Exp024: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.038461538461538464
+  25:
+    Training Exprience(25):
+      Active units: 27
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 0.0
+      Exp021: 0.0
+      Exp022: 0.0
+      Exp023: 0.0
+      Exp024: 0.0
+      Exp025: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.037037037037037035
+  26:
+    Training Exprience(26):
+      Active units: 28
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 0.0
+      Exp021: 0.0
+      Exp022: 0.0
+      Exp023: 0.0
+      Exp024: 0.0
+      Exp025: 0.0
+      Exp026: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.03571428571428571
+  27:
+    Training Exprience(27):
+      Active units: 29
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 0.0
+      Exp021: 0.0
+      Exp022: 0.0
+      Exp023: 0.0
+      Exp024: 0.0
+      Exp025: 0.0
+      Exp026: 0.0
+      Exp027: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.034482758620689655
+  28:
+    Training Exprience(28):
+      Active units: 30
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 0.0
+      Exp021: 0.0
+      Exp022: 0.0
+      Exp023: 0.0
+      Exp024: 0.0
+      Exp025: 0.0
+      Exp026: 0.0
+      Exp027: 0.0
+      Exp028: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.03333333333333333
+  29:
+    Training Exprience(29): &id001
+      Active units: 31
+      Exp000: 0.0
+      Exp001: 0.0
+      Exp002: 0.0
+      Exp003: 0.0
+      Exp004: 0.0
+      Exp005: 0.0
+      Exp006: 0.0
+      Exp007: 0.0
+      Exp008: 0.0
+      Exp009: 0.0
+      Exp010: 0.0
+      Exp011: 0.0
+      Exp012: 0.0
+      Exp013: 0.0
+      Exp014: 0.0
+      Exp015: 0.0
+      Exp016: 0.0
+      Exp017: 0.0
+      Exp018: 0.0
+      Exp019: 0.0
+      Exp020: 0.0
+      Exp021: 0.0
+      Exp022: 0.0
+      Exp023: 0.0
+      Exp024: 0.0
+      Exp025: 0.0
+      Exp026: 0.0
+      Exp027: 0.0
+      Exp028: 0.0
+      Exp029: 1.0
+      Top1_Acc_Stream/eval_phase/test_stream/Task000: 0.03225806451612903
+Cumulative Test Results:
+  Cumulative Set 0: 0.0
+  Cumulative Set 1: 0.0
+  Cumulative Set 2: 0.0
+  Cumulative Set 3: 0.0
+  Cumulative Set 4: 0.0
+  Cumulative Set 5: 0.032258063554763794
+Cumulative Training Results:
+- Exp_4(6 acs): 0.1666666716337204
+- Exp_9(11 acs): 0.09090909361839294
+- Exp_14(16 acs): 0.0625
+- Exp_19(21 acs): 0.0476190485060215
+- Exp_24(26 acs): 0.03846153989434242
+- Exp_29(31 acs): 0.032258063554763794
+Final Model Accuracy Results: *id001
+Stream Results:
+  Experience 000: 1.0
+  Experience 001: 0.3333333333333333
+  Experience 002: 0.25
+  Experience 003: 0.2
+  Experience 004: 0.16666666666666666
+  Experience 005: 0.14285714285714285
+  Experience 006: 0.1625
+  Experience 007: 0.1111111111111111
+  Experience 008: 0.1
+  Experience 009: 0.09090909090909091
+  Experience 010: 0.08333333333333333
+  Experience 011: 0.08461538461538462
+  Experience 012: 0.07142857142857142
+  Experience 013: 0.06666666666666667
+  Experience 014: 0.0625
+  Experience 015: 0.058823529411764705
+  Experience 016: 0.05555555555555555
+  Experience 017: 0.05263157894736842
+  Experience 018: 0.05
+  Experience 019: 0.047619047619047616
+  Experience 020: 0.045454545454545456
+  Experience 021: 0.043478260869565216
+  Experience 022: 0.041666666666666664
+  Experience 023: 0.04
+  Experience 024: 0.038461538461538464
+  Experience 025: 0.037037037037037035
+  Experience 026: 0.03571428571428571
+  Experience 027: 0.034482758620689655
+  Experience 028: 0.03333333333333333
+  Experience 029: 0.03225806451612903
+Training Results:
+  0:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 2
+  1:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 3
+  2:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 4
+  3:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 5
+  4:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 6
+  5:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 7
+  6:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 8
+  7:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 9
+  8:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 10
+  9:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 11
+  10:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 12
+  11:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 13
+  12:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 14
+  13:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 15
+  14:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 16
+  15:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 17
+  16:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 18
+  17:
+    Training Experience:
+      Accuracy: 0.0
+      Active units: 19
+  18:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 20
+  19:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 21
+  20:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 22
+  21:
+    Training Experience:
+      Accuracy: 0.0
+      Active units: 23
+  22:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 24
+  23:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 25
+  24:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 26
+  25:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 27
+  26:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 28
+  27:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 29
+  28:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 30
+  29:
+    Training Experience:
+      Accuracy: 1.0
+      Active units: 31
