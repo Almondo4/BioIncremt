@@ -69,14 +69,14 @@ for exp_id, experience in enumerate(benchmark.train_stream):
     res = cl_strategy.train(experience)
     print('Training completed')
 
-    # TODO Evaluate the current training accuracy on test set stream
+    # Evaluate the current training accuracy on relative test streams (for comprehensive training results)
     print('Computing accuracy on test set')
     results.append(cl_strategy.eval(benchmark.test_stream[:experience.current_experience + 1]))
     model_incs.append(torch.sum(model4.active_units).item())
     print("Model's classifier layer output shape: ", torch.sum(model4.active_units).item())
 
-    # Cumulative results
-    if exp_id  in cumulative_test_expriences: #TODO: starting fom 0 and also 2 sets are combined -- was 1
+    # Cumulative training results
+    if exp_id  in cumulative_test_expriences:
         print(f'Computing accuracy on the cumulative test set {cumulative_set}:')
         with torch.no_grad():
             y_pred_logits = cl_strategy.model(torch.tensor(cumulative_benchmark[cumulative_set].X, dtype=torch.float32))
@@ -91,15 +91,10 @@ for exp_id, experience in enumerate(benchmark.train_stream):
         #reset accuracy
         accuracy.reset()
         cumulative_set += 1
-#print classes in first dataset in cumulative benchmark
-classes = torch.unique(cumulative_benchmark[0].targets)
-#get classes as list and transform it to string where each key is the class and the frequency is the value
-num_cumul_cls = cumulative_benchmark[0].targets.tolist()
-num_cumul_cls = [str(i) for i in num_cumul_cls]
-num_cumul_cls = {i: num_cumul_cls.count(i) for i in num_cumul_cls}
-print('Classes in first dataset in cumulative benchmark: ', num_cumul_cls)
 
-# print('Classes in first dataset in cumulative benchmark: ', cumulative_benchmark[0].classes_in_this_dataset)
+
+
+
 #for eahc incremental set in benchmark print the classes in it with exp id
 for i, exp in enumerate(benchmark.train_stream):
     print(f'Classes in experience {i}: ', exp.classes_in_this_experience)
